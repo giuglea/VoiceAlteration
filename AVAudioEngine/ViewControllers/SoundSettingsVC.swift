@@ -47,6 +47,9 @@ class SoundSettings: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         configureUI(.notPlaying)
+        
+        
+        
     }
     
     @IBAction func playSoundButton(_ sender: UIButton) {
@@ -63,7 +66,7 @@ class SoundSettings: UIViewController {
             playSound(echo: true)
         case .reverb:
             playSound(reverb: true)
-        case.custom:
+        case .custom:
             playCustomSound(rate: 1, pitch: -500, echo: true, echoType: .drumsBitBrush, reverb: true, reverbType: .largeChamber, reverbDryMix: 30)
         }
         
@@ -77,6 +80,10 @@ class SoundSettings: UIViewController {
         stopAudio()
     }
     
+    func loadCustomSounds(){
+        
+    }
+    
     
 
 
@@ -86,7 +93,7 @@ class SoundSettings: UIViewController {
 extension SoundSettings: UICollectionViewDelegate,UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return customSoundButtons.count
+        return 2//customSoundButtons.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -106,10 +113,12 @@ extension SoundSettings: UICollectionViewDelegate,UICollectionViewDataSource{
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == indexPath.last{
+        if indexPath.row == customSoundButtons.count{
             performSegue(withIdentifier: "NewCustomSound", sender: nil)
+        }else{
+            //play sound
         }
-        
+      // UILongPressGestureRecognizer()
     }
     
     

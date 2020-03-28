@@ -17,8 +17,9 @@
 		2B4D5028241E639B008C1875 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B4D5026241E639B008C1875 /* LaunchScreen.storyboard */; };
 		2B4D5033241E639B008C1875 /* AVAudioEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4D5032241E639B008C1875 /* AVAudioEngineTests.swift */; };
 		2B4D503E241E639C008C1875 /* AVAudioEngineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4D503D241E639C008C1875 /* AVAudioEngineUITests.swift */; };
-		2B4D504C241E68B2008C1875 /* SoundSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4D504B241E68B2008C1875 /* SoundSettings.swift */; };
-		2B4D504E241EB375008C1875 /* PlaySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4D504D241EB375008C1875 /* PlaySound.swift */; };
+		2B4D504C241E68B2008C1875 /* SoundSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4D504B241E68B2008C1875 /* SoundSettingsVC.swift */; };
+		2B4D504E241EB375008C1875 /* SoundSettingsE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4D504D241EB375008C1875 /* SoundSettingsE.swift */; };
+		2B92C943242BE89C00DC5241 /* CreateCustomSoundVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B92C942242BE89C00DC5241 /* CreateCustomSoundVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +56,9 @@
 		2B4D5039241E639C008C1875 /* AVAudioEngineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AVAudioEngineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B4D503D241E639C008C1875 /* AVAudioEngineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioEngineUITests.swift; sourceTree = "<group>"; };
 		2B4D503F241E639C008C1875 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B4D504B241E68B2008C1875 /* SoundSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettings.swift; sourceTree = "<group>"; };
-		2B4D504D241EB375008C1875 /* PlaySound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySound.swift; sourceTree = "<group>"; };
+		2B4D504B241E68B2008C1875 /* SoundSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsVC.swift; sourceTree = "<group>"; };
+		2B4D504D241EB375008C1875 /* SoundSettingsE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsE.swift; sourceTree = "<group>"; };
+		2B92C942242BE89C00DC5241 /* CreateCustomSoundVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCustomSoundVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,12 +111,10 @@
 			children = (
 				2B4D501B241E6398008C1875 /* AppDelegate.swift */,
 				2B4D501D241E6398008C1875 /* SceneDelegate.swift */,
-				2B4D501F241E6398008C1875 /* ViewController.swift */,
+				2B92C944242BE8E400DC5241 /* ViewControllers */,
 				2B4D5021241E6398008C1875 /* Main.storyboard */,
-				2B299F6124217660002BD102 /* CustomSoundModel.swift */,
+				2B92C945242BE92E00DC5241 /* Model */,
 				2B299F5F242175D2002BD102 /* CustomSoundCell.swift */,
-				2B4D504B241E68B2008C1875 /* SoundSettings.swift */,
-				2B4D504D241EB375008C1875 /* PlaySound.swift */,
 				2B4D5024241E639B008C1875 /* Assets.xcassets */,
 				2B4D5026241E639B008C1875 /* LaunchScreen.storyboard */,
 				2B4D5029241E639B008C1875 /* Info.plist */,
@@ -138,6 +138,25 @@
 				2B4D503F241E639C008C1875 /* Info.plist */,
 			);
 			path = AVAudioEngineUITests;
+			sourceTree = "<group>";
+		};
+		2B92C944242BE8E400DC5241 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2B4D501F241E6398008C1875 /* ViewController.swift */,
+				2B4D504B241E68B2008C1875 /* SoundSettingsVC.swift */,
+				2B4D504D241EB375008C1875 /* SoundSettingsE.swift */,
+				2B92C942242BE89C00DC5241 /* CreateCustomSoundVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2B92C945242BE92E00DC5241 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2B299F6124217660002BD102 /* CustomSoundModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,8 +291,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B299F6224217660002BD102 /* CustomSoundModel.swift in Sources */,
-				2B4D504E241EB375008C1875 /* PlaySound.swift in Sources */,
-				2B4D504C241E68B2008C1875 /* SoundSettings.swift in Sources */,
+				2B4D504E241EB375008C1875 /* SoundSettingsE.swift in Sources */,
+				2B92C943242BE89C00DC5241 /* CreateCustomSoundVC.swift in Sources */,
+				2B4D504C241E68B2008C1875 /* SoundSettingsVC.swift in Sources */,
 				2B4D5020241E6398008C1875 /* ViewController.swift in Sources */,
 				2B4D501C241E6398008C1875 /* AppDelegate.swift in Sources */,
 				2B299F60242175D2002BD102 /* CustomSoundCell.swift in Sources */,
