@@ -112,10 +112,10 @@
 				2B4D501B241E6398008C1875 /* AppDelegate.swift */,
 				2B4D501D241E6398008C1875 /* SceneDelegate.swift */,
 				2B92C944242BE8E400DC5241 /* ViewControllers */,
-				2B4D5021241E6398008C1875 /* Main.storyboard */,
 				2B92C945242BE92E00DC5241 /* Model */,
 				2B299F5F242175D2002BD102 /* CustomSoundCell.swift */,
 				2B4D5024241E639B008C1875 /* Assets.xcassets */,
+				2B4D5021241E6398008C1875 /* Main.storyboard */,
 				2B4D5026241E639B008C1875 /* LaunchScreen.storyboard */,
 				2B4D5029241E639B008C1875 /* Info.plist */,
 			);

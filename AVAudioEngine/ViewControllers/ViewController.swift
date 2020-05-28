@@ -90,5 +90,10 @@ class ViewController: UIViewController,AVAudioRecorderDelegate {
     }
     
     
+    func realTimeVoiceChanger(){
+        //amplifier+voice preset
+    }
+    
+    
 }
 
