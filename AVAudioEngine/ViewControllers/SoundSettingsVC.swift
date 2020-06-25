@@ -12,18 +12,20 @@ import AVFoundation
 class SoundSettings: UIViewController {
 
     var recordedAudioURL: URL!
-    var audioFile:AVAudioFile!
-    var audioEngine:AVAudioEngine!
+    var audioFile: AVAudioFile!
+    var audioEngine: AVAudioEngine!
     var audioPlayerNode: AVAudioPlayerNode!
     var stopTimer: Timer!
     
-    var customSoundButtons = [CustomSoundModel]()
+    var customSoundArray = [CustomSoundModel]()
+    
+    let database = Database()
     
     @IBOutlet weak var uiCollectionView: UICollectionView!
     
 
     enum ButtonType: Int {
-        case slow = 0, fast, chipmunk, vader, echo, reverb, custom
+        case slow = 0, fast, chipmunk, vader, echo, reverb
     }
     
     @IBOutlet weak var snailButton: UIButton!
@@ -32,14 +34,13 @@ class SoundSettings: UIViewController {
     @IBOutlet weak var vaderButton: UIButton!
     @IBOutlet weak var echoButton: UIButton!
     @IBOutlet weak var reverbButton: UIButton!
-   // @IBOutlet weak var customButton: UIButton!
-    
-    
     @IBOutlet weak var stopButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadCustomSounds()
         setupAudio()
         
     }
@@ -66,8 +67,7 @@ class SoundSettings: UIViewController {
             playSound(echo: true)
         case .reverb:
             playSound(reverb: true)
-        case .custom:
-            playCustomSound(rate: 1, pitch: -500, echo: true, echoType: .drumsBitBrush, reverb: true, reverbType: .largeChamber, reverbDryMix: 30)
+            
         }
         
 
@@ -81,6 +81,7 @@ class SoundSettings: UIViewController {
     }
     
     func loadCustomSounds(){
+        customSoundArray = database.getCustomSounds()
         
     }
     
@@ -93,17 +94,17 @@ class SoundSettings: UIViewController {
 extension SoundSettings: UICollectionViewDelegate,UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2//customSoundButtons.count
+        return customSoundArray.count+1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        //customCollectionSoundButton
+      
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCollectionSoundButton", for: indexPath) as? CustomSoundCell else{
             return UICollectionViewCell()
             
         }
         
-        if indexPath.row == customSoundButtons.count/*-1*/ {
+        if indexPath.row == customSoundArray.count/*-1*/ {
             cell.customSoundImage.image = UIImage(systemName: "plus.app")
         }
         
@@ -113,12 +114,21 @@ extension SoundSettings: UICollectionViewDelegate,UICollectionViewDataSource{
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == customSoundButtons.count{
+        if indexPath.row == customSoundArray.count{
             performSegue(withIdentifier: "NewCustomSound", sender: nil)
         }else{
             //play sound
         }
       // UILongPressGestureRecognizer()
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "NewCustomSound"{
+            let  createCustomSound = segue.destination as! CreeateCustomSoundVC 
+            createCustomSound.recordedAudioURL = recordedAudioURL
+            
+        }
     }
     
     

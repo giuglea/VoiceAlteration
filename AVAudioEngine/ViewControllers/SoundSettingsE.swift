@@ -43,35 +43,35 @@ extension SoundSettings: AVAudioPlayerDelegate {
         }
     }
     
-    func playCustomSound(rate: Float? = nil, pitch: Float? = nil, echo: Bool = false, echoType: AVAudioUnitDistortionPreset = .multiEcho1, reverb: Bool = false, reverbType: AVAudioUnitReverbPreset = .largeChamber, reverbDryMix: Float = 50){
+    func playCustomSound(customSound: CustomSoundModel){
         audioEngine = AVAudioEngine()
         audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attach(audioPlayerNode)
         
         let changePitchNode = AVAudioUnitTimePitch()
-        if let pitch = pitch{
+        if let pitch = customSound.pitch{
             changePitchNode.pitch = pitch
         }
         
-        if let rate = rate{
+        if let rate = customSound.rate{
             changePitchNode.rate = rate
         }
         
         audioEngine.attach(changePitchNode)
         let echoNode = AVAudioUnitDistortion()
-        echoNode.loadFactoryPreset(echoType)
+        echoNode.loadFactoryPreset(customSound.echoType)
         audioEngine.attach(echoNode)
         
         let reverbNode = AVAudioUnitReverb()
-        reverbNode.loadFactoryPreset(reverbType)
-        reverbNode.wetDryMix = reverbDryMix
+        reverbNode.loadFactoryPreset(customSound.reverbType)
+        reverbNode.wetDryMix = customSound.reverbDryMix
         audioEngine.attach(reverbNode)
         
-        if echo == true && reverb == true{
+        if customSound.echo == true && customSound.reverb == true{
             connectAudioNodes(audioPlayerNode, changePitchNode, echoNode, reverbNode, audioEngine.outputNode)
-        }else if echo == true && reverb == false{
+        }else if customSound.echo == true && customSound.reverb == false{
             connectAudioNodes(audioPlayerNode, changePitchNode, echoNode, audioEngine.outputNode)
-        }else if echo == false && reverb == true{
+        }else if customSound.echo == false && customSound.reverb == true{
             connectAudioNodes(audioPlayerNode, changePitchNode, reverbNode, audioEngine.outputNode)
         }else{
             connectAudioNodes(audioPlayerNode, changePitchNode, audioEngine.outputNode)
@@ -82,7 +82,7 @@ extension SoundSettings: AVAudioPlayerDelegate {
         audioPlayerNode.scheduleFile(audioFile, at: nil) {
             var delayInSeconds: Double = 0
             if let lastRenderTime = self.audioPlayerNode.lastRenderTime,let playerTime = self.audioPlayerNode.playerTime(forNodeTime: lastRenderTime){
-                if let rate = rate {
+                if let rate = customSound.rate {
                     delayInSeconds = Double(self.audioFile.length - playerTime.sampleTime) / Double(self.audioFile.processingFormat.sampleRate) / Double(rate)
                 } else {
                     delayInSeconds = Double(self.audioFile.length - playerTime.sampleTime) / Double(self.audioFile.processingFormat.sampleRate)
@@ -224,8 +224,7 @@ extension SoundSettings: AVAudioPlayerDelegate {
         vaderButton.isEnabled = enabled
         echoButton.isEnabled = enabled
         reverbButton.isEnabled = enabled
-        //customButton.isEnabled = enabled
-        ///custom
+        
     }
 
     func showAlert(_ title: String, message: String) {
