@@ -10,7 +10,11 @@ import Foundation
 import AVFoundation
 
 
-class CustomSoundModel{
+class CustomSoundModel:Equatable{
+    
+    
+   
+    
     
     var rate: Float?
     var pitch: Float?
@@ -20,7 +24,7 @@ class CustomSoundModel{
     var reverbType: AVAudioUnitReverbPreset
     var reverbDryMix: Float
     
-    init(rate: Float?, pitch: Float?, echo:Bool = false, echoType: AVAudioUnitDistortionPreset, reverb: Bool = false, reverbType: AVAudioUnitReverbPreset, reverbDryMix: Float = 50) {
+    init(rate: Float? = 1, pitch: Float? = 0, echo:Bool = false, echoType: AVAudioUnitDistortionPreset = .drumsBitBrush, reverb: Bool = false, reverbType: AVAudioUnitReverbPreset = .cathedral, reverbDryMix: Float = 0) {
         self.rate = rate
         self.pitch = pitch
         self.echo = echo
@@ -28,6 +32,32 @@ class CustomSoundModel{
         self.reverb = reverb
         self.reverbType = reverbType
         self.reverbDryMix = reverbDryMix
+    }
+    
+    
+    func printModel(){
+        print("Rate: ",rate)
+        print("Pitch: ",pitch)
+        print("Echo: ",echo)
+        print("EchoType: ",echoType)
+        print("Reverb: ",reverb)
+        print("ReverbType: ",reverbType)
+        print("ReverbDryMix: ",reverbDryMix)
+        
+        
+    }
+    
+    static func == (lhs: CustomSoundModel, rhs: CustomSoundModel) -> Bool {
+        if lhs.rate != rhs.rate {return false}
+        if lhs.pitch != rhs.pitch {return false}
+        if lhs.echo != rhs.echo {return false}
+        if lhs.echoType != rhs.echoType {return false}
+        if lhs.reverb != rhs.reverb {return false}
+        if lhs.reverbType != rhs.reverbType {return false}
+        if lhs.reverbDryMix != rhs.reverbDryMix {return false}
+        
+        return true
+        
     }
     
 }

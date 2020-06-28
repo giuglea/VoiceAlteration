@@ -45,7 +45,15 @@ class CreeateCustomSoundVC: UIViewController{
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
-    var audioObject = CustomSoundModel(rate: nil, pitch: nil, echo: false, echoType: .drumsBitBrush, reverb: false, reverbType: .cathedral, reverbDryMix: 50)
+    struct  AlertSound{
+        static let customSoundSaved = "The Custom Sound was Saved"
+        static let customSoundAlreadySaved = "The Same Custom Sound was already saved and added to your library"
+        static let dismissAlert = "Dismiss"
+    }
+    
+    
+    var audioObject = CustomSoundModel(rate: 1, pitch: 0, echo: false, echoType: .drumsBitBrush, reverb: false, reverbType: .cathedral, reverbDryMix: 0)
+   
     
     
     override func viewDidLoad() {
@@ -125,6 +133,8 @@ class CreeateCustomSoundVC: UIViewController{
         reverbTypePicker.isUserInteractionEnabled = false
     }
     
+    //TODO: Create hide animation here
+    
     
     
     
@@ -180,6 +190,7 @@ class CreeateCustomSoundVC: UIViewController{
         playButton.isEnabled = false
         stopButton.isHidden = false
         
+        
     }
     
     
@@ -191,7 +202,28 @@ class CreeateCustomSoundVC: UIViewController{
     
     
     @IBAction func saveCustomSound(_ sender: Any) {
+        audioObject.printModel()
+        
+        //TODO: Dif custom sound before adds with database
+        
+      
+//        if audioObject == previousAudioObject{
+//            let alert = UIAlertController( title: AlertSound.customSoundAlreadySaved, message: "", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: AlertSound.dismissAlert, style: .default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//
+//        }
+//        else{
+//            let alert = UIAlertController( title: AlertSound.customSoundSaved, message: "", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: AlertSound.dismissAlert, style: .default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//            previousAudioObject = audioObject
+//
+//        }
+        
         database.insertCustomSound(customSound: audioObject)//insert with last index
+      
+        
     }
     
     
@@ -248,7 +280,7 @@ class CreeateCustomSoundVC: UIViewController{
         do {
             try audioEngine.start()
         } catch {
-           // showAlert(Alerts.AudioEngineError, message: String(describing: error))
+           
             return
         }
        
@@ -305,7 +337,7 @@ extension CreeateCustomSoundVC: UIPickerViewDelegate, UIPickerViewDataSource{
   
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
           1
-      }
+    }
       
       func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == 0{

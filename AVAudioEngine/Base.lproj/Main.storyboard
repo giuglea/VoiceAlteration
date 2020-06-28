@@ -192,6 +192,28 @@
                                                             </constraints>
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                                         </imageView>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gaO-zo-x6o">
+                                                            <rect key="frame" x="101" y="3" width="20" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="tintColor" red="0.92107564210000004" green="0.17719933390000001" blue="0.1850450635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <state key="normal" image="xmark.circle.fill" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="delete:" destination="KtE-Pp-FLz" eventType="touchUpInside" id="TW9-2b-AEG"/>
+                                                                <action selector="deleteThisCustomSound:" destination="KtE-Pp-FLz" eventType="touchUpInside" id="Kkb-pL-p6W"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFZ-fZ-qmP">
+                                                            <rect key="frame" x="2" y="0.0" width="44" height="27"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <state key="normal" title="Update">
+                                                                <color key="titleColor" red="0.01243694685" green="0.80005544419999997" blue="0.72627890110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="update:" destination="KtE-Pp-FLz" eventType="touchUpInside" id="7Sp-zq-hpZ"/>
+                                                                <action selector="updateThisCustomSound:" destination="KtE-Pp-FLz" eventType="touchUpInside" id="SeL-Cl-F8E"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="bFs-3m-5Sl" firstAttribute="top" secondItem="ToX-wn-lcF" secondAttribute="top" id="I7I-nE-m6E"/>
@@ -203,6 +225,8 @@
                                                 <size key="customSize" width="124" height="92"/>
                                                 <connections>
                                                     <outlet property="customSoundImage" destination="bFs-3m-5Sl" id="yXK-Ao-bN6"/>
+                                                    <outlet property="deleteButton" destination="gaO-zo-x6o" id="V1G-50-BZh"/>
+                                                    <outlet property="updateButton" destination="xFZ-fZ-qmP" id="OH0-pJ-Lz7"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
@@ -472,5 +496,6 @@
         <image name="square.and.arrow.down.fill" catalog="system" width="121" height="128"/>
         <image name="stop.circle" catalog="system" width="128" height="121"/>
         <image name="stop.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
     </resources>
 </document>

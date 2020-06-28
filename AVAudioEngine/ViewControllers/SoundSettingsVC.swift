@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class SoundSettings: UIViewController {
+class SoundSettings: UIViewController, UIGestureRecognizerDelegate {
 
     var recordedAudioURL: URL!
     var audioFile: AVAudioFile!
@@ -42,15 +42,27 @@ class SoundSettings: UIViewController {
         
         loadCustomSounds()
         setupAudio()
+        setUpLongTapGesture()
+        
+        
+      
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         configureUI(.notPlaying)
+        loadCustomSounds()
         
         
         
+    }
+    
+    func setUpLongTapGesture(){
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
+        longPressGesture.minimumPressDuration = 1.0 // 1 second press
+        longPressGesture.delegate = self
+        self.uiCollectionView.addGestureRecognizer(longPressGesture)
     }
     
     @IBAction func playSoundButton(_ sender: UIButton) {
@@ -82,6 +94,7 @@ class SoundSettings: UIViewController {
     
     func loadCustomSounds(){
         customSoundArray = database.getCustomSounds()
+        uiCollectionView.reloadData()
         
     }
     
@@ -104,8 +117,11 @@ extension SoundSettings: UICollectionViewDelegate,UICollectionViewDataSource{
             
         }
         
-        if indexPath.row == customSoundArray.count/*-1*/ {
-            cell.customSoundImage.image = UIImage(systemName: "plus.app")
+        if indexPath.row != customSoundArray.count/*-1*/ {
+           cell.customSoundImage.image = UIImage(systemName: "mic.fill")
+        }
+        else{
+             cell.customSoundImage.image = UIImage(systemName: "plus.app")
         }
         
         
@@ -117,9 +133,12 @@ extension SoundSettings: UICollectionViewDelegate,UICollectionViewDataSource{
         if indexPath.row == customSoundArray.count{
             performSegue(withIdentifier: "NewCustomSound", sender: nil)
         }else{
-            //play sound
+            print(indexPath.row)
+            print("Aci sunt: " + String(customSoundArray.count))
+            customSoundArray[indexPath.row].printModel()
+            playCustomSound(customSound: customSoundArray[indexPath.row])
         }
-      // UILongPressGestureRecognizer()
+      //TODO: Add delete/update gesture
     }
     
     
@@ -127,6 +146,21 @@ extension SoundSettings: UICollectionViewDelegate,UICollectionViewDataSource{
         if segue.identifier == "NewCustomSound"{
             let  createCustomSound = segue.destination as! CreeateCustomSoundVC 
             createCustomSound.recordedAudioURL = recordedAudioURL
+            
+        }
+    }
+    
+    
+    @objc func longPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer){
+        if longPressGestureRecognizer.state == UIGestureRecognizer.State.began{
+            let touchPoint = longPressGestureRecognizer.location(in: self.uiCollectionView)
+            if  let indexPath = uiCollectionView.indexPathForItem(at: touchPoint){
+                if indexPath.row < customSoundArray.count{
+                    let printed = customSoundArray[indexPath.row]
+                    print(printed.echo)
+                }
+                
+            }
             
         }
     }

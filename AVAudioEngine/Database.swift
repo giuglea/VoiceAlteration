@@ -15,7 +15,10 @@ class Database{
     var db: OpaquePointer? = nil
     var fileURL: Any? = nil
 
-    init(){self.openDatabase()}
+    init(){
+        self.openDatabase()
+        self.createCustomSoundTable()
+    }
     init(created: Bool){
         if created == false{
             self.createDatabase()
@@ -67,7 +70,7 @@ class Database{
     
     func createCustomSoundTable(){
      
-        var createTableString = "CREATE TABLE  CustomSound (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Rate DOUBLE, Pitch DOUBLE, Echo BOOL, EchoType INT, Reverb BOOL, ReverbType INT, DryMix FLOAT);"
+        var createTableString = "CREATE TABLE  CustomSound (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Rate FLOAT, Pitch FLOAT, Echo INT, EchoType INT, Reverb INT, ReverbType INT, DryMix FLOAT);"
         var createTableStatement: OpaquePointer? = nil
            
            if sqlite3_prepare_v2(db, createTableString, -1, &createTableStatement, nil)==SQLITE_OK{
@@ -89,7 +92,7 @@ class Database{
     
     func insertCustomSound(customSound: CustomSoundModel){
         
-        let insertStatementString = "INSERT INTO CustomSound (Id, Rate, Pitch, Echo, EchoType, Reverb, ReverbType, DryMix) VALUES (?, '\(customSound.rate)', '\(customSound.pitch)', '\(customSound.echo)', '\(customSound.echoType.hashValue)', '\(customSound.reverb)', '\(customSound.reverbType.hashValue)', '\(customSound.reverbDryMix)');"
+        let insertStatementString = "INSERT INTO CustomSound (Id, Rate, Pitch, Echo, EchoType, Reverb, ReverbType, DryMix) VALUES (?, '\(customSound.rate!)', '\(customSound.pitch!)', '\(customSound.echo ? 1:0)', '\(customSound.echoType.hashValue)', '\(customSound.reverb ? 1:0)', '\(customSound.reverbType.hashValue)', '\(customSound.reverbDryMix)');"
         var insertStatement:OpaquePointer?=nil
         
            if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK{
@@ -132,6 +135,7 @@ class Database{
                 let dryMix = Float(sqlite3_column_int(queryStatement, 7))
                 
                 let customSound = CustomSoundModel(rate: rate, pitch: pitch, echo: echo, echoType: echoTypeConversion, reverb: reverb, reverbType: reverbTypeConversion, reverbDryMix: dryMix)
+                customSound.printModel()
                 
                 customSoundArray.append(customSound)
                 
@@ -149,12 +153,29 @@ class Database{
     }
     
     
-    
+    func deleteCustomSoundTable(){
+        let deleteStatementString = "DROP TABLE CustomSound;"
+        var deleteStatement: OpaquePointer? = nil
+        
+        if sqlite3_prepare_v2(db,deleteStatementString, -1, &deleteStatement, nil)==SQLITE_OK{
+            if sqlite3_step(deleteStatement)==SQLITE_DONE{
+                print("Table Deleted")
+            }
+            else{
+                print("Table could not be deleted")
+            }
+        }
+        else{
+            print("Delete statement could not be prepared")
+        }
+        sqlite3_finalize(deleteStatement)
+        
+    }
     
     
        func deleteCustomSound(customSound: CustomSoundModel)->Bool{
            //(Id, Rate, Pitch, Echo, EchoType, Reverb, ReverbType, DryMix)
-        let deleteStatementString = "DELETE FROM  CustomSound WHERE Rate = '\(customSound.rate)' AND Pitch = '\(customSound.pitch)' AND Echo = '\(customSound.echo)' AND EchoType = '\(customSound.echoType.hashValue)' AND Reverb = '\(customSound.reverb)' AND ReverbType = '\(customSound.reverbType.hashValue)' AND DryMix = '\(customSound.reverbDryMix)';"
+        let deleteStatementString = "DELETE FROM  CustomSound WHERE Rate = '\(customSound.rate)' AND Pitch = '\(customSound.pitch)' AND Echo = '\(customSound.echo ? 1:0)' AND EchoType = '\(customSound.echoType.hashValue)' AND Reverb = '\(customSound.reverb ? 1:0)' AND ReverbType = '\(customSound.reverbType.hashValue)' AND DryMix = '\(customSound.reverbDryMix)';"
            
            var deleteRowStatement: OpaquePointer? = nil
            

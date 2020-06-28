@@ -71,7 +71,7 @@ class ViewController: UIViewController,AVAudioRecorderDelegate {
            
         }else{
             applyEffects.isEnabled = false
-            print("Recording was no succesful!")
+            print("Recording was not succesful!")
         }
        
     }
